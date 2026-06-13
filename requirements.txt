@@ -1,0 +1,7 @@
+aiogram
+aiohttp
+python-dotenv
+asyncpg
+redis
+cryptobot-python
+python-jose[cryptography]
