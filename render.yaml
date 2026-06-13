@@ -1,0 +1,81 @@
+services:
+  - type: web
+    name: api-gateway
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python services/api_gateway.py
+    envVars:
+      - key: SERVICE_NAME
+        value: api-gateway
+      - key: PORT
+        value: 8000
+
+  - type: web
+    name: auth-service
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python services/auth_service.py
+    envVars:
+      - key: SERVICE_NAME
+        value: auth-service
+      - key: PORT
+        value: 8001
+
+  - type: web
+    name: user-service
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python services/user_service.py
+    envVars:
+      - key: SERVICE_NAME
+        value: user-service
+      - key: PORT
+        value: 8002
+
+  - type: web
+    name: admin-service
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python services/admin_service.py
+    envVars:
+      - key: SERVICE_NAME
+        value: admin-service
+      - key: PORT
+        value: 8003
+
+  - type: web
+    name: message-router
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python services/message_router.py
+    envVars:
+      - key: SERVICE_NAME
+        value: message-router
+      - key: PORT
+        value: 8004
+
+  - type: web
+    name: llm-router
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python services/llm_router.py
+    envVars:
+      - key: SERVICE_NAME
+        value: llm-router
+      - key: PORT
+        value: 8005
+
+  - type: worker
+    name: cleanup-worker
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python workers/cleanup_worker.py
+    schedule: "0 3 * * *"
+
+databases:
+  - name: llm-hub-db
+    plan: starter
+    databaseName: llmhub
+
+  - name: llm-hub-redis
+    plan: starter
